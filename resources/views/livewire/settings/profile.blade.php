@@ -69,46 +69,50 @@ new class extends Component {
     }
 }; ?>
 
-<section class="w-full">
-    @include('partials.settings-heading')
-
-    <x-settings.layout :heading="__('Profile')" :subheading="__('Update your name and email address')">
-        <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-6">
-            <flux:input wire:model="name" :label="__('Name')" type="text" required autofocus autocomplete="name" />
-
-            <div>
-                <flux:input wire:model="email" :label="__('Email')" type="email" required autocomplete="email" />
-
-                @if (auth()->user() instanceof \Illuminate\Contracts\Auth\MustVerifyEmail &&! auth()->user()->hasVerifiedEmail())
-                    <div>
-                        <flux:text class="mt-4">
-                            {{ __('Your email address is unverified.') }}
-
-                            <flux:link class="text-sm cursor-pointer" wire:click.prevent="resendVerificationNotification">
-                                {{ __('Click here to re-send the verification email.') }}
-                            </flux:link>
-                        </flux:text>
-
-                        @if (session('status') === 'verification-link-sent')
-                            <flux:text class="mt-2 font-medium !dark:text-green-400 !text-green-600">
-                                {{ __('A new verification link has been sent to your email address.') }}
-                            </flux:text>
-                        @endif
-                    </div>
-                @endif
+<x-layouts.app title="Pengaturan Profil">
+<div class="min-h-screen flex flex-col">
+    <x-header />
+    {{-- Konten utama pengaturan profil --}}
+    <section class="flex-1 w-full min-h-screen flex flex-col items-center justify-center" style="background:linear-gradient(135deg,#e0e7ff 0%,#f0f6ff 100%) !important;">
+        <div class="w-full max-w-3xl bg-white rounded-2xl shadow-2xl border-4 border-blue-200 p-8 md:p-12" style="background:#fff !important; border-color:#1e40af !important;">
+            <div class="relative mb-6 w-full">
+                <h1 class="font-extrabold text-2xl mb-2" style="color:#1e40af !important;">Settings</h1>
+                <div class="text-base mb-6" style="color:#2563eb !important;">Manage your profile and account settings</div>
+                <div data-orientation="horizontal" role="none" class="h-px w-full" style="background:#1e40af !important; opacity:0.2 !important;"></div>
             </div>
-
-            <div class="flex items-center gap-4">
-                <div class="flex items-center justify-end">
-                    <flux:button variant="primary" type="submit" class="w-full">{{ __('Save') }}</flux:button>
+            <div class="flex items-start max-md:flex-col">
+                <div class="me-10 w-full pb-4 md:w-[220px]">
+                    <nav class="flex flex-col overflow-visible min-h-auto">
+                        <a href="/settings/profile" class="h-10 lg:h-8 flex items-center gap-3 rounded-lg px-3 my-px text-blue-700 font-bold bg-blue-50 hover:bg-blue-100 transition" style="color:#1e40af !important; background:#e0e7ff !important;">Profile</a>
+                        <a href="/settings/password" class="h-10 lg:h-8 flex items-center gap-3 rounded-lg px-3 my-px text-blue-700 font-bold bg-blue-50 hover:bg-blue-100 transition" style="color:#1e40af !important; background:#e0e7ff !important;">Password</a>
+                        {{-- <a href="/settings/appearance" class="h-10 lg:h-8 flex items-center gap-3 rounded-lg px-3 my-px text-blue-700 font-bold bg-blue-50 hover:bg-blue-100 transition" style="color:#1e40af !important; background:#e0e7ff !important;">Appearance</a> --}}
+                    </nav>
                 </div>
-
-                <x-action-message class="me-3" on="profile-updated">
-                    {{ __('Saved.') }}
-                </x-action-message>
+                <div class="flex-1 self-stretch max-md:pt-6">
+                    <div class="font-extrabold text-xl mb-2" style="color:#1e40af !important;">Profil Pengguna</div>
+                    <div class="text-base mb-6" style="color:#2563eb !important;">Perbarui nama dan email akun Anda di sini.</div>
+                    <div class="mt-5 w-full max-w-lg">
+                        <form wire:submit="updateProfileInformation" class="my-6 w-full space-y-8">
+                            <div class="flex flex-col gap-6">
+                                <div>
+                                    <label class="block text-lg font-bold mb-2" for="name" style="color:#1e40af !important;">Nama</label>
+                                    <input wire:model="name" id="name" name="name" type="text" required autofocus autocomplete="name" class="w-full px-5 py-3 rounded-lg border-2 font-semibold focus:ring-2 outline-none text-lg placeholder:text-blue-400 transition" style="color:#1e40af !important; background-color:#f0f6ff !important; border-color:#1e40af !important;" placeholder="Nama Lengkap" />
+                                </div>
+                                <div>
+                                    <label class="block text-lg font-bold mb-2" for="email" style="color:#1e40af !important;">Email</label>
+                                    <input wire:model="email" id="email" name="email" type="email" required autocomplete="email" class="w-full px-5 py-3 rounded-lg border-2 font-semibold focus:ring-2 outline-none text-lg placeholder:text-blue-400 transition" style="color:#1e40af !important; background-color:#f0f6ff !important; border-color:#1e40af !important;" placeholder="Alamat Email" />
+                                </div>
+                            </div>
+                            <div class="flex justify-between mt-8">
+                                <a href="#" onclick="window.history.length > 1 ? window.history.back() : window.location='{{ route('dashboard') }}'; return false;" class="px-8 py-3 rounded-lg font-bold text-lg shadow transition" style="background:#e0e7ff !important; color:#1e40af !important; border:2px solid #1e40af !important;">Kembali</a>
+                                <button type="submit" class="px-8 py-3 rounded-lg font-bold text-lg shadow transition" style="background:#1e40af !important; color:#fff !important;">Simpan Perubahan</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-        </form>
-
-        <livewire:settings.delete-user-form />
-    </x-settings.layout>
-</section>
+        </div>
+    </section>
+    <x-footer />
+</div>
+</x-layouts.app>
