@@ -5148,3 +5148,5 @@ Did you mean one of these?
 #65 C:\\laragon\\www\\theindonesianpress-app\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\laragon\\\\www\\\\...')
 #66 {main}
 "} 
+[2025-05-29 15:06:14] local.INFO: Upload file berhasil {"path":"articles/1748531174_hNB1PlFo.jpg"} 
+[2025-05-29 15:09:53] local.INFO: Upload file berhasil {"path":"articles/1748531393_9OexBFa5.jpg"} 

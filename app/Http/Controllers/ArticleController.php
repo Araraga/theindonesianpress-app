@@ -46,7 +46,8 @@ class ArticleController extends Controller
 
         $image = $request->file('featured_image');
         $imageName = time().'_'.Str::random(8).'.'.$image->getClientOriginalExtension();
-        $uploadResult = $image->storeAs('articles', $imageName);
+        // Pastikan upload ke disk 'public' agar bisa diakses dari URL /storage
+        $uploadResult = $image->storeAs('articles', $imageName, 'public');
         if (!$uploadResult) {
             \Log::error('Gagal upload file ke storage!', ['imageName' => $imageName]);
             return back()->withErrors(['featured_image' => 'Gagal upload file ke storage!'])->withInput();
@@ -210,7 +211,8 @@ class ArticleController extends Controller
         if ($request->hasFile('featured_image')) {
             $image = $request->file('featured_image');
             $imageName = time().'_'.Str::random(8).'.'.$image->getClientOriginalExtension();
-            $uploadResult = $image->storeAs('articles', $imageName);
+            // Pastikan upload ke disk 'public' agar bisa diakses dari URL /storage
+            $uploadResult = $image->storeAs('articles', $imageName, 'public');
             if ($uploadResult) {
                 $article->featured_image = 'articles/'.$imageName;
             }

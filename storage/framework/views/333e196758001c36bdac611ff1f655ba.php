@@ -30,36 +30,36 @@
 <?php unset($__componentOriginalfd1f218809a441e923395fcbf03e4272); ?>
 <?php endif; ?>
         <main class="flex-1 flex flex-col items-center justify-center py-10 px-2 md:px-0">
-            <div class="w-full max-w-5xl mx-auto rounded-2xl shadow-2xl p-10 md:p-16 mt-8 border-4 border-blue-200 dark:border-blue-700 backdrop-blur-xl" style="background: linear-gradient(180deg, #2A2A2A 0%, #3A4B57 100%);">
-                <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-8 text-center tracking-wide font-serif">Tulis Artikel Baru</h1>
+            <div class="w-full max-w-5xl mx-auto rounded-2xl shadow-2xl p-10 md:p-16 mt-8 border-4 border-blue-200 dark:border-blue-700 backdrop-blur-xl" style="background: #171717f7;">
+                <h1 class="text-3xl md:text-4xl font-extrabold text-[#FFF6BE] !text-[#FFF6BE] mb-8 text-center tracking-wide font-serif" style="color:#FFF6BE !important;">Tulis Artikel Baru</h1>
                 <form action="<?php echo e(route('artikel.store')); ?>" method="POST" enctype="multipart/form-data" class="space-y-10">
                     <?php echo csrf_field(); ?>
                     <div class="flex flex-col gap-6">
-                        <input type="text" name="title" required class="text-4xl md:text-5xl font-extrabold bg-transparent border-none focus:ring-0 focus:outline-none text-gray-900 dark:text-white placeholder:italic placeholder:text-gray-400 mb-2" placeholder="Judul Berita..." value="<?php echo e(old('title')); ?>" autofocus>
-                        <input type="text" name="subheadline" required class="text-xl md:text-2xl font-semibold bg-transparent border-none focus:ring-0 focus:outline-none text-gray-700 dark:text-gray-300 placeholder:italic placeholder:text-gray-400 mb-4" placeholder="Subheadline (opsional)..." value="<?php echo e(old('subheadline')); ?>">
+                        <input type="text" name="title" required class="text-xl md:text-x2 font-extrabold bg-transparent border-none focus:ring-0 focus:outline-none text-[#fefefe] placeholder:italic placeholder:text-[#cccccc] mb-2" placeholder="Judul Berita..." value="<?php echo e(old('title')); ?>" autofocus>
+                        <input type="text" name="subheadline" required class="text-xl md:text-2xl font-normal bg-transparent border-none focus:ring-0 focus:outline-none text-[#fefefe] placeholder:italic placeholder:text-[#cccccc] mb-4" placeholder="Subheadline (opsional)..." value="<?php echo e(old('subheadline')); ?>">
                         <div class="flex flex-col md:flex-row gap-6">
-                            <div class="flex-1 flex flex-col items-center bg-blue-50 dark:bg-neutral-900 rounded-2xl border-2 border-blue-200 dark:border-blue-700 p-6 shadow-md">
-                                <label class="block text-lg font-bold text-blue-700 dark:text-blue-200 mb-3">Genre</label>
-                                <select name="genre" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-white dark:bg-neutral-900 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold">
+                            <div class="flex-1 flex flex-col items-center bg-transparent rounded-2xl border-2 border-blue-200 dark:border-blue-700 p-6 shadow-md">
+                                <label class="block text-lg font-bold text-[#FFF6BE] !text-[#FFF6BE] mb-3" style="color:#FFF6BE !important;">Genre</label>
+                                <select name="genre" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-[#232323] text-[#fefefe] focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold" style="color:#fefefe;">
                                     <?php $__currentLoopData = $genres; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $genre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($genre); ?>" <?php echo e(old('genre') == $genre ? 'selected' : ''); ?>><?php echo e($genre); ?></option>
+                                        <option value="<?php echo e($genre); ?>" style="color:#111 !important; background:#fff;" <?php echo e(old('genre') == $genre ? 'selected style=color:#fefefe!important;background:#232323;' : ''); ?>><?php echo e($genre); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>
-                            <div class="flex-1 flex flex-col items-center bg-blue-50 dark:bg-neutral-900 rounded-2xl border-2 border-blue-200 dark:border-blue-700 p-6 shadow-md">
-                                <label class="block text-lg font-bold text-blue-700 dark:text-blue-200 mb-3">Gambar Utama</label>
-                                <input type="file" name="featured_image" accept="image/*" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-white dark:bg-neutral-900 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold" />
+                            <div class="flex-1 flex flex-col items-center bg-transparent rounded-2xl border-2 border-blue-200 dark:border-blue-700 p-6 shadow-md">
+                                <label class="block text-lg font-bold text-[#FFF6BE] !text-[#FFF6BE] mb-3" style="color:#FFF6BE !important;">Gambar Utama</label>
+                                <input type="file" name="featured_image" accept="image/*" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-[#232323] text-[#fefefe] focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold" />
                             </div>
                         </div>
-                        <textarea name="content" rows="22" required class="w-full text-lg md:text-xl bg-transparent border-none focus:ring-0 focus:outline-none text-gray-900 dark:text-white placeholder:italic placeholder:text-gray-400 resize-none min-h-[500px]" placeholder="Tulis narasi berita, opini, atau laporan Anda di sini. Mulailah dengan paragraf pembuka yang menarik, lalu lanjutkan dengan isi berita secara natural..."><?php echo e(old('content')); ?></textarea>
+                        <textarea name="content" rows="22" required class="w-full text-lg md:text-xl bg-transparent border-none focus:ring-0 focus:outline-none text-[#fefefe] placeholder:italic placeholder:text-[#cccccc] resize-none min-h-[500px]" placeholder="Tulis narasi berita, opini, atau laporan Anda di sini. Mulailah dengan paragraf pembuka yang menarik, lalu lanjutkan dengan isi berita secara natural..."><?php echo e(old('content')); ?></textarea>
                     </div>
                     <div class="flex justify-between items-center gap-4 mt-10">
-                        <a href="<?php echo e(route('dashboard')); ?>" class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-300 dark:hover:bg-neutral-600 transition">
+                        <a href="<?php echo e(route('dashboard')); ?>" class="inline-flex items-center gap-2 px-6 py-2 rounded-lg bg-[#232323] text-[#fefefe] font-semibold hover:bg-[#333] transition">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg> Kembali
                         </a>
                         <div class="flex gap-4">
-                            <button type="reset" class="px-6 py-2 rounded-lg bg-gray-200 dark:bg-neutral-700 text-gray-700 dark:text-gray-200 font-semibold hover:bg-gray-300 dark:hover:bg-neutral-600 transition">Reset</button>
-                            <button type="submit" class="px-6 py-2 rounded-lg bg-blue-600 text-white font-semibold hover:bg-blue-700 transition">Terbitkan Artikel</button>
+                            <button type="reset" class="px-6 py-2 rounded-lg bg-[#232323] text-[#fefefe] font-semibold hover:bg-[#333] transition">Reset</button>
+                            <button type="submit" class="px-6 py-2 rounded-lg" style="background:#7E2320; color:#FFF6BE; font-weight:600;">Terbitkan Artikel</button>
                         </div>
                     </div>
                 </form>

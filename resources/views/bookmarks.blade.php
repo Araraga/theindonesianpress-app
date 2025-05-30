@@ -4,7 +4,7 @@
         <!-- Konten utama bookmarks -->
         <div class="flex-1">
             <div class="max-w-5xl mx-auto mt-8">
-                <h1 class="text-2xl font-bold mb-6 text-gray-900 dark:text-white">Artikel yang Disimpan</h1>
+                <h1 class="text-2xl font-bold mb-6" style="color:#7E2320;">Artikel yang Disimpan</h1>
                 @php
                     $perPage = 6;
                     $page = request()->get('page', 1);
@@ -23,7 +23,7 @@
                                     <img src="{{ asset('storage/' . $art->featured_image) }}" alt="Gambar Artikel" class="rounded-t-xl h-40 w-full object-cover">
                                 </a>
                                 <div class="p-4 flex-1 flex flex-col">
-                                    <span class="text-xs text-blue-600 font-semibold mb-2">{{ $art->genre }}</span>
+                                    <span class="text-xs font-semibold mb-2 underline" style="color:#FFF6BE;">{{ $art->genre }}</span>
                                     <h2 class="font-bold text-lg text-gray-900 dark:text-white mb-2 line-clamp-2">
                                         {{ Str::limit($art->title, 16, '...') }}
                                     </h2>

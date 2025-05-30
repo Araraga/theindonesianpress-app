@@ -9,11 +9,26 @@
 <?php endif; ?>
 <?php $component->withAttributes(['title' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(__('Edit Artikel'))]); ?>
     <div class="min-h-screen flex flex-col" style="background: linear-gradient(180deg, #EDEDED 100%, #F5F5F5 60%, #EDEDED 100%);">
-        <div class="w-full bg-white border-b border-neutral-200">
-            <div class="container mx-auto flex flex-row items-center justify-center py-8 px-1 gap-1 relative">
-                <span class="font-extrabold text-3xl md:text-4xl text-blue-700 tracking-widest drop-shadow text-center w-full font-serif" style="letter-spacing:0.15em; font-family: 'Playfair Display', 'Merriweather', serif;">The Indonesian Press</span>
-            </div>
-        </div>
+        <?php if (isset($component)) { $__componentOriginalfd1f218809a441e923395fcbf03e4272 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginalfd1f218809a441e923395fcbf03e4272 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.header','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('header'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginalfd1f218809a441e923395fcbf03e4272)): ?>
+<?php $attributes = $__attributesOriginalfd1f218809a441e923395fcbf03e4272; ?>
+<?php unset($__attributesOriginalfd1f218809a441e923395fcbf03e4272); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginalfd1f218809a441e923395fcbf03e4272)): ?>
+<?php $component = $__componentOriginalfd1f218809a441e923395fcbf03e4272; ?>
+<?php unset($__componentOriginalfd1f218809a441e923395fcbf03e4272); ?>
+<?php endif; ?>
         <main class="flex-1 flex flex-col items-center justify-center py-10 px-2 md:px-0">
             <div class="w-full max-w-5xl mx-auto rounded-2xl shadow-2xl p-10 md:p-16 mt-8 border-4 border-blue-200 dark:border-blue-700 backdrop-blur-xl" style="background: linear-gradient(180deg, #2A2A2A 0%, #3A4B57 100%);">
                 <h1 class="text-3xl md:text-4xl font-extrabold text-white mb-8 text-center tracking-wide font-serif">Edit Artikel</h1>
@@ -50,7 +65,28 @@
                 </form>
             </div>
         </main>
+        <?php if (isset($component)) { $__componentOriginal8a8716efb3c62a45938aca52e78e0322 = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginal8a8716efb3c62a45938aca52e78e0322 = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.footer','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('footer'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes([]); ?>
+<?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginal8a8716efb3c62a45938aca52e78e0322)): ?>
+<?php $attributes = $__attributesOriginal8a8716efb3c62a45938aca52e78e0322; ?>
+<?php unset($__attributesOriginal8a8716efb3c62a45938aca52e78e0322); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginal8a8716efb3c62a45938aca52e78e0322)): ?>
+<?php $component = $__componentOriginal8a8716efb3c62a45938aca52e78e0322; ?>
+<?php unset($__componentOriginal8a8716efb3c62a45938aca52e78e0322); ?>
+<?php endif; ?>
     </div>
+    
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal5863877a5171c196453bfa0bd807e410)): ?>

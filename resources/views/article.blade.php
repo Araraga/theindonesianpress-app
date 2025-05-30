@@ -51,7 +51,7 @@
                     {!! nl2br(e($article->content)) !!}
                 </div>
                 <hr class="my-8 border-t-2 border-gray-200" />
-                <!-- Tombol Like/Dislike Responsive -->
+                <!-- Tombol Like/Dislike/Bookmark Responsive -->
                 <div class="flex items-center gap-6 mt-10 mb-8 px-2 justify-center">
                     <form method="POST" action="{{ route('artikel.like', $article->id) }}" class="like-form" onsubmit="event.preventDefault(); fetchLike(this);">
                         @csrf
@@ -69,9 +69,6 @@
                             <span class="dislike-label">Dislike</span>
                         </button>
                     </form>
-                </div>
-                <!-- Tombol Bookmark Responsive -->
-                <div class="flex items-center gap-6 mt-2 mb-8 px-2 justify-center">
                     @auth
                         @php $bookmarked = $article->bookmarks()->where('user_id', auth()->id())->exists(); @endphp
                         <form method="POST" action="{{ $bookmarked ? route('artikel.unbookmark', $article->id) : route('artikel.bookmark', $article->id) }}" class="bookmark-form" onsubmit="event.preventDefault(); fetchBookmark(this);">
@@ -92,6 +89,7 @@
                         <h3 class="font-bold text-lg mb-4" style="color:#1e40af !important;">Diskusi & Komentar</h3>
                         @auth
                         <form method="POST" action="{{ route('artikel.comment', $article->id) }}" class="mb-6 comment-form" onsubmit="event.preventDefault(); submitComment(this);">
+                            {{-- Komentar: Auto simpan tanpa reload, langsung muncul di bawah jika berhasil --}}
                             @csrf
                             <textarea name="content" rows="3" class="w-full rounded-lg border-2 px-4 py-3 text-base focus:ring-2 outline-none resize-none mb-2"
                                 style="background:#f0f6ff !important; color:#1e40af !important; border-color:#1e40af !important;" placeholder="Tulis komentar..." required></textarea>
@@ -223,7 +221,9 @@ function submitEditComment(form, id) {
     .then(res => res.ok ? res.json() : res.text())
     .then(data => {
         if (typeof data === 'object' && data.content) {
-            document.getElementById('comment-content' + id).innerText = data.content;
+            // Perbaiki: update isi komentar dan kembalikan ke tampilan normal
+            const contentDiv = document.getElementById('comment-content-' + id);
+            contentDiv.innerText = data.content;
         }
         btn.disabled = false;
     });
