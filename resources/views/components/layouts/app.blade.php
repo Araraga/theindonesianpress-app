@@ -1,5 +1,10 @@
-<x-layouts.app.sidebar :title="$title ?? null">
-    <flux:main>
+<!DOCTYPE html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+    <head>
+        @include('partials.head')
+    </head>
+    <body class="min-h-screen antialiased" style="background: linear-gradient(80deg, #EDEDED 100%, #F5F5F5 60%, #EDEDED 100%);">
         {{ $slot }}
-    </flux:main>
-</x-layouts.app.sidebar>
+        @fluxScripts
+    </body>
+</html>

@@ -5,18 +5,18 @@ use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
 Route::middleware('guest')->group(function () {
-    Volt::route('login', 'auth.login')
-        ->name('login');
-
-    Volt::route('register', 'auth.register')
-        ->name('register');
-
-    Volt::route('forgot-password', 'auth.forgot-password')
-        ->name('password.request');
-
-    Volt::route('reset-password/{token}', 'auth.reset-password')
-        ->name('password.reset');
-
+    // Ganti register agar pakai Blade, bukan Volt
+    Route::get('register', function() {
+        return view('auth.register');
+    })->name('register');
+    Route::post('register', [App\Http\Controllers\Auth\AuthController::class, 'register']);
+    Route::get('login', function() {
+        return view('auth.login');
+    })->name('login');
+    Route::post('login', [App\Http\Controllers\Auth\AuthController::class, 'login']);
+    // ...jika ingin, bisa tambahkan route login custom juga
+    // Volt::route('forgot-password', 'auth.forgot-password')->name('password.request');
+    // Volt::route('reset-password/{token}', 'auth.reset-password')->name('password.reset');
 });
 
 Route::middleware('auth')->group(function () {
