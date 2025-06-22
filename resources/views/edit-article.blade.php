@@ -11,10 +11,10 @@
                         <input type="text" name="subheadline" required class="text-xl md:text-2xl font-semibold bg-transparent border-none focus:ring-0 focus:outline-none text-gray-700 dark:text-gray-300 placeholder:italic placeholder:text-gray-400 mb-4" placeholder="Subheadline (opsional)..." value="{{ old('subheadline', $article->subheadline) }}">
                         <div class="flex flex-col md:flex-row gap-6">
                             <div class="flex-1 flex flex-col items-center bg-blue-50 dark:bg-neutral-900 rounded-2xl border-2 border-blue-200 dark:border-blue-700 p-6 shadow-md">
-                                <label class="block text-lg font-bold text-blue-700 dark:text-blue-200 mb-3">Genre</label>
-                                <select name="genre" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-white dark:bg-neutral-900 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold">
-                                    @foreach($genres as $genre)
-                                        <option value="{{ $genre }}" {{ old('genre', $article->genre) == $genre ? 'selected' : '' }}>{{ $genre }}</option>
+                                <label class="block text-lg font-bold text-blue-700 dark:text-blue-200 mb-3">Kategori</label>
+                                <select name="category_id" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-white dark:bg-neutral-900 text-blue-900 dark:text-white focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold">
+                                    @foreach($categories as $category)
+                                        <option value="{{ $category->id }}" {{ old('category_id', $article->category_id) == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div>

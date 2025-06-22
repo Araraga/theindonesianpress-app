@@ -6,6 +6,7 @@ use App\Models\Article;
 use App\Models\Like;
 use App\Models\Comment;
 use App\Models\Bookmark;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
@@ -14,19 +15,8 @@ class ArticleController extends Controller
 {
     public function create()
     {
-        $genres = [
-            'Bisnis & Tenaga Kerja',
-            'Seni & Budaya',
-            'Sains',
-            'Olahraga',
-            'Foto',
-            'Ilustrasi',
-            'Video',
-            'Majalah',
-            'Teka-Teki',
-            'Opini', // Tambah genre Opini
-        ];
-        return view('write-article', compact('genres'));
+        $categories = Category::orderBy('name')->get();
+        return view('write-article', compact('categories'));
     }
 
     public function store(Request $request)
@@ -35,7 +25,7 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'subheadline' => 'required|string|max:255',
             'content' => 'required',
-            'genre' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
             'featured_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
@@ -59,13 +49,12 @@ class ArticleController extends Controller
         $originalSlug = $slug;
         $i = 1;
         while (Article::where('slug', $slug)->exists()) {
-            $slug = $originalSlug . '-' . $i;
-            $i++;
+            $slug = $originalSlug . '-' . $i++;
         }
 
         $article = Article::create([
             'user_id' => Auth::id(),
-            'genre' => $request->genre,
+            'category_id' => $request->category_id,
             'title' => $request->title,
             'slug' => $slug,
             'subheadline' => $request->subheadline,
@@ -79,95 +68,21 @@ class ArticleController extends Controller
         return redirect()->route('dashboard')->with('success', 'Artikel berhasil disimpan!');
     }
 
-    public function dashboard(Request $request)
-    {
-        $query = Article::orderByDesc('published_at')
-            ->where('status', 'published');
-
-        // Filter by genre if present
-        // Mapping slug ke nama genre asli
-        $genreMap = [
-            'bisnis' => 'Bisnis & Tenaga Kerja',
-            'fitur' => 'Fitur',
-            'opini' => 'Opini',
-            'seni' => 'Seni & Budaya',
-            'sains' => 'Sains',
-            'olahraga' => 'Olahraga',
-            'foto' => 'Foto',
-            'ilustrasi' => 'Ilustrasi',
-            'video' => 'Video',
-            'majalah' => 'Majalah',
-            'teka-teki' => 'Teka-Teki',
-        ];
-        $selectedGenre = null;
-        if ($request->has('genre') && $request->genre) {
-            $genreKey = strtolower($request->genre);
-            $genreName = $genreMap[$genreKey] ?? $request->genre;
-            $query->where('genre', $genreName);
-            $selectedGenre = $genreName;
-        }
-
-        $articles = $query->get();
-
-        // Headline: artikel dengan skor tertinggi minggu ini (view_count + 2*like_count)
-        $headline = Article::withCount('likes')
-            ->where('status', 'published')
-            ->when($selectedGenre, function($q) use ($selectedGenre) {
-                $q->where('genre', $selectedGenre);
-            })
-            ->whereBetween('published_at', [now()->startOfWeek(), now()->endOfWeek()])
-            ->get()
-            ->sortByDesc(function($a) {
-                return $a->view_count + 2 * $a->likes_count;
-            })
-            ->first();
-        $headline2 = $headline ? Article::withCount('likes')
-            ->where('status', 'published')
-            ->when($selectedGenre, function($q) use ($selectedGenre) {
-                $q->where('genre', $selectedGenre);
-            })
-            ->whereBetween('published_at', [now()->startOfWeek(), now()->endOfWeek()])
-            ->where('id', '!=', $headline->id)
-            ->get()
-            ->sortByDesc(function($a) {
-                return $a->view_count + 2 * $a->likes_count;
-            })
-            ->first() : null;
-        // Top 3 populer: 3 artikel dengan skor tertinggi (view_count + 2*like_count), TIDAK exclude headline
-        $top3 = Article::withCount('likes')
-            ->where('status', 'published')
-            ->when($selectedGenre, function($q) use ($selectedGenre) {
-                $q->where('genre', $selectedGenre);
-            })
-            ->get()
-            ->sortByDesc(function($a) {
-                return $a->view_count + 2 * $a->likes_count;
-            })
-            ->take(3)
-            ->values();
-        // ICYMI: 3 artikel random selain headline & top3
-        $excludeIds = collect([$headline?->id, $headline2?->id])->merge($top3->pluck('id'))->filter();
-        $icymi = $articles->whereNotIn('id', $excludeIds)->shuffle()->take(3);
-        // Ambil semua genre unik
-        $allGenres = Article::query()->select('genre')->distinct()->pluck('genre');
-
-        return view('dashboard', [
-            'articles' => $articles,
-            'headline' => $headline,
-            'headline2' => $headline2,
-            'top3' => $top3,
-            'icymi' => $icymi,
-            'allGenres' => $allGenres,
-            'selectedGenre' => $selectedGenre,
-        ]);
-    }
-
     public function show($id)
     {
-        $article = \App\Models\Article::with('user')->findOrFail($id);
-        // Tambah view_count setiap kali artikel dibuka
+        $article = \App\Models\Article::with('user','category')->findOrFail($id);
         $article->increment('view_count');
-        return view('article', compact('article'));
+
+        // Ambil 5 artikel acak selain artikel yang sedang dibaca
+        $icymi = Article::where('id', '!=', $id)
+                        ->inRandomOrder()
+                        ->limit(5)
+                        ->get();
+
+        return view('article', [
+            'article' => $article,
+            'icymi' => $icymi
+        ]);
     }
 
     public function edit($id)
@@ -176,19 +91,8 @@ class ArticleController extends Controller
         if ($article->user_id !== Auth::id()) {
             abort(403, 'Anda tidak berhak mengedit artikel ini.');
         }
-        $genres = [
-            'Bisnis & Tenaga Kerja',
-            'Seni & Budaya',
-            'Sains',
-            'Olahraga',
-            'Foto',
-            'Ilustrasi',
-            'Video',
-            'Majalah',
-            'Teka-Teki',
-            'Opini',
-        ];
-        return view('edit-article', compact('article', 'genres'));
+        $categories = Category::orderBy('name')->get();
+        return view('edit-article', compact('article', 'categories'));
     }
 
     public function update(Request $request, $id)
@@ -201,13 +105,13 @@ class ArticleController extends Controller
             'title' => 'required|string|max:255',
             'subheadline' => 'required|string|max:255',
             'content' => 'required',
-            'genre' => 'required|string',
+            'category_id' => 'required|exists:categories,id',
             'featured_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
         $article->title = $request->title;
         $article->subheadline = $request->subheadline;
         $article->content = $request->content;
-        $article->genre = $request->genre;
+        $article->category_id = $request->category_id;
         if ($request->hasFile('featured_image')) {
             $image = $request->file('featured_image');
             $imageName = time().'_'.Str::random(8).'.'.$image->getClientOriginalExtension();
@@ -220,6 +124,7 @@ class ArticleController extends Controller
         $article->save();
         return redirect()->route('artikel.show', $article->id)->with('success', 'Artikel berhasil diperbarui!');
     }
+
 
     public function like($id)
     {
@@ -383,5 +288,12 @@ class ArticleController extends Controller
         }
         $article->delete();
         return redirect()->route('dashboard')->with('success', 'Artikel berhasil dihapus.');
+    }
+
+    // Tampilkan daftar artikel untuk admin panel
+    public function adminIndex()
+    {
+        $articles = Article::with('user', 'category')->orderByDesc('created_at')->paginate(15);
+        return view('admin.articles.index', compact('articles'));
     }
 }

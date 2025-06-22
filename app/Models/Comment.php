@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Comment extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'article_id',
         'user_id',
@@ -15,23 +17,30 @@ class Comment extends Model
         'is_approved',
     ];
 
-    public function user(): BelongsTo
+    protected function casts(): array
     {
-        return $this->belongsTo(User::class);
+        return [
+            'is_approved' => 'boolean',
+        ];
     }
 
-    public function article(): BelongsTo
+    public function article()
     {
-        return $this->belongsTo(Article::class);
+        return $this->belongsTo(\App\Models\Article::class);
     }
 
-    public function parent(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(Comment::class, 'parent_id');
+        return $this->belongsTo(\App\Models\User::class);
     }
 
-    public function children()
+    public function parent()
     {
-        return $this->hasMany(Comment::class, 'parent_id');
+        return $this->belongsTo(\App\Models\Comment::class, 'parent_id');
+    }
+
+    public function replies()
+    {
+        return $this->hasMany(\App\Models\Comment::class, 'parent_id');
     }
 }

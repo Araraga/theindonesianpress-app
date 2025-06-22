@@ -39,10 +39,10 @@
                         <input type="text" name="subheadline" required class="text-xl md:text-2xl font-normal bg-transparent border-none focus:ring-0 focus:outline-none text-[#fefefe] placeholder:italic placeholder:text-[#cccccc] mb-4" placeholder="Subheadline (opsional)..." value="<?php echo e(old('subheadline')); ?>">
                         <div class="flex flex-col md:flex-row gap-6">
                             <div class="flex-1 flex flex-col items-center bg-transparent rounded-2xl border-2 border-blue-200 dark:border-blue-700 p-6 shadow-md">
-                                <label class="block text-lg font-bold text-[#FFF6BE] !text-[#FFF6BE] mb-3" style="color:#FFF6BE !important;">Genre</label>
-                                <select name="genre" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-[#232323] text-[#fefefe] focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold" style="color:#fefefe;">
-                                    <?php $__currentLoopData = $genres; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $genre): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                        <option value="<?php echo e($genre); ?>" style="color:#111 !important; background:#fff;" <?php echo e(old('genre') == $genre ? 'selected style=color:#fefefe!important;background:#232323;' : ''); ?>><?php echo e($genre); ?></option>
+                                <label class="block text-lg font-bold text-[#FFF6BE] !text-[#FFF6BE] mb-3" style="color:#FFF6BE !important;">Kategori</label>
+                                <select name="category_id" required class="w-full px-4 py-3 rounded-lg border-2 border-blue-200 dark:border-blue-700 bg-[#232323] text-[#fefefe] focus:ring-2 focus:ring-blue-500 outline-none text-lg font-semibold" style="color:#fefefe;">
+                                    <?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $category): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                        <option value="<?php echo e($category->id); ?>" style="color:#111 !important; background:#fff;" <?php echo e(old('category_id') == $category->id ? 'selected style=color:#fefefe!important;background:#232323;' : ''); ?>><?php echo e($category->name); ?></option>
                                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                                 </select>
                             </div>

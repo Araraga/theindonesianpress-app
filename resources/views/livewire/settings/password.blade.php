@@ -63,52 +63,58 @@ new class extends Component {
 }; ?>
 
 <x-layouts.app title="Pengaturan Password">
-<div class="min-h-screen flex flex-col">
-    <x-header />
-    {{-- Konten utama pengaturan password --}}
-    <main class="flex-1 container mx-auto mx-4 md:mx-16 py-10 px-8 md:px-16 min-h-[60vh] flex flex-col justify-between" style="background: linear-gradient(180deg, #EDEDED 100%, #F5F5F5 60%, #EDEDED 100%);">
-        <div class="w-full max-w-3xl mx-auto rounded-2xl shadow-2xl border-4 border-blue-200 p-8 md:p-12" style="background:#171717f7 !important; border-color:#1e40af !important;">
-            <div class="relative mb-6 w-full">
-                <h1 class="font-extrabold text-2xl mb-2" style="color:#FFF6BE !important;">Ubah Password</h1>
-                <div class="text-base mb-6" style="color:#fefefe !important;">Pastikan akun Anda menggunakan password yang panjang dan acak agar tetap aman</div>
-                <div data-orientation="horizontal" role="none" class="h-px w-full" style="background:#1e40af !important; opacity:0.2 !important;"></div>
-            </div>
-            <div class="flex-1 self-stretch max-md:pt-6">
-                <div class="mt-5 w-full max-w-lg mx-auto">
-                    @if (session()->has('password_success'))
-                        <div class="mb-6 px-4 py-3 rounded-lg bg-green-100 border border-green-400 text-green-800 font-semibold text-center" style="color:#166534 !important; background:#bbf7d0 !important; border-color:#22c55e !important;">
-                            {{ session('password_success') }}
-                        </div>
-                    @endif
-                    @if (session()->has('password_error'))
-                        <div class="mb-6 px-4 py-3 rounded-lg bg-red-100 border border-red-400 text-red-800 font-semibold text-center" style="color:#b91c1c !important; background:#fee2e2 !important; border-color:#ef4444 !important;">
-                            {{ session('password_error') }}
-                        </div>
-                    @endif
-                    <form wire:submit="updatePassword" class="my-6 w-full space-y-8">
-                        <div class="flex flex-col gap-6">
-                            <div>
-                                <label class="block text-lg font-bold mb-2" for="current_password" style="color:#fefefe !important;">Password Lama</label>
-                                <input wire:model="current_password" id="current_password" name="current_password" type="password" required autocomplete="current-password" class="w-full px-5 py-3 rounded-lg border-2 font-semibold focus:ring-2 outline-none text-lg placeholder:text-gray-400 transition" style="color:#fefefe !important; background-color:transparent !important; border-color:#fefefe !important; outline:2px solid #fefefe !important;" placeholder="Password Lama" />
-                            </div>
-                            <div>
-                                <label class="block text-lg font-bold mb-2" for="password" style="color:#fefefe !important;">Password Baru</label>
-                                <input wire:model="password" id="password" name="password" type="password" required autocomplete="new-password" class="w-full px-5 py-3 rounded-lg border-2 font-semibold focus:ring-2 outline-none text-lg placeholder:text-gray-400 transition" style="color:#fefefe !important; background-color:transparent !important; border-color:#fefefe !important; outline:2px solid #fefefe !important;" placeholder="Password Baru" />
-                            </div>
-                            <div>
-                                <label class="block text-lg font-bold mb-2" for="password_confirmation" style="color:#fefefe !important;">Konfirmasi Password</label>
-                                <input wire:model="password_confirmation" id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password" class="w-full px-5 py-3 rounded-lg border-2 font-semibold focus:ring-2 outline-none text-lg placeholder:text-gray-400 transition" style="color:#fefefe !important; background-color:transparent !important; border-color:#fefefe !important; outline:2px solid #fefefe !important;" placeholder="Konfirmasi Password" />
-                            </div>
-                        </div>
-                        <div class="flex justify-between mt-8">
-                            <a href="{{ route('settings.profile') }}" class="px-8 py-3 rounded-lg font-bold text-lg shadow transition" style="background:transparent !important; color:#fefefe !important; border:2px solid #fefefe !important;">Kembali</a>
-                            <button type="submit" class="px-8 py-3 rounded-lg font-bold text-lg shadow transition" style="background:#7E2320 !important; color:#FFF6BE !important;">Simpan Perubahan</button>
-                        </div>
-                    </form>
+    <div class="min-h-screen flex flex-col">
+        <x-header />
+        <main class="flex-1 container mx-auto flex flex-col items-center justify-center py-10 px-2 md:px-0 min-h-[60vh]" style="background: linear-gradient(180deg, #EDEDED 100%, #F5F5F5 60%, #EDEDED 100%);">
+            <div class="w-full max-w-lg mx-auto rounded-2xl shadow-2xl border-4 border-blue-200 p-8 md:p-12" style="background:#171717f7 !important; border-color:#1e40af !important;">
+                <h1 class="font-extrabold text-2xl mb-6" style="color:#FFF6BE !important;">Pengaturan Password</h1>
+                <div class="text-base mb-6" style="color:#fefefe !important;">Ganti password akun Anda di sini.</div>
+
+                {{-- Navigasi --}}
+                <div class="flex flex-col md:flex-row items-center justify-center gap-4 mb-8">
+                    <a href="/settings/profile" class="h-10 flex items-center gap-3 rounded-lg px-6 font-bold bg-blue-50 hover:bg-blue-100 transition text-[#171717] border-2 border-blue-200 shadow" style="min-width:160px; text-align:center;">Profile</a>
+                    <a href="{{ route('settings.password') }}" class="h-10 flex items-center gap-3 rounded-lg px-6 font-bold bg-blue-50 hover:bg-blue-100 transition text-[#171717] border-2 border-blue-200 shadow" style="min-width:160px; text-align:center;">Password</a>
                 </div>
+
+                {{-- Tampilkan pesan error/sukses --}}
+                @if (session('error'))
+                    <div class="mb-4 p-4 rounded bg-red-600 text-white font-bold">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="mb-4 p-4 rounded bg-green-600 text-white font-bold">
+                        {{ session('success') }}
+                    </div>
+                @endif
+                {{-- Form ganti password --}}
+                <form method="POST" action="{{ route('settings.password.update') }}" class="w-full max-w-md mx-auto">
+                    @csrf
+                    <div class="mb-4">
+                        <label class="block text-lg font-bold mb-2" for="current_password" style="color:#fefefe !important;">Password Lama</label>
+                        <input id="current_password" name="current_password" type="password" class="w-full px-5 py-3 rounded-lg border-2 font-semibold text-lg" style="color:#fefefe !important; background-color:transparent !important; border-color:#fefefe !important;">
+                        @error('current_password')
+                            <div class="text-red-400 mt-1 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-lg font-bold mb-2" for="new_password" style="color:#fefefe !important;">Password Baru</label>
+                        <input id="new_password" name="new_password" type="password" class="w-full px-5 py-3 rounded-lg border-2 font-semibold text-lg" style="color:#fefefe !important; background-color:transparent !important; border-color:#fefefe !important;">
+                        @error('new_password')
+                            <div class="text-red-400 mt-1 text-sm">{{ $message }}</div>
+                        @enderror
+                    </div>
+                    <div class="mb-8">
+                        <label class="block text-lg font-bold mb-2" for="new_password_confirmation" style="color:#fefefe !important;">Konfirmasi Password Baru</label>
+                        <input id="new_password_confirmation" name="new_password_confirmation" type="password" class="w-full px-5 py-3 rounded-lg border-2 font-semibold text-lg" style="color:#fefefe !important; background-color:transparent !important; border-color:#fefefe !important;">
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <a href="#" onclick="window.history.length > 1 ? window.history.back() : window.location='{{ route('dashboard') }}'; return false;" class="px-8 py-3 rounded-lg font-bold text-lg shadow transition" style="background:transparent !important; color:#fefefe !important; border:2px solid #444 !important;">Kembali</a>
+                        <button type="submit" class="px-8 py-3 rounded-lg font-bold text-lg shadow transition" style="background:#7E2320 !important; color:#FFF6BE !important;">Simpan Password</button>
+                    </div>
+                </form>
             </div>
-        </div>
-    </main>
-    <x-footer />
-</div>
+        </main>
+        <x-footer />
+    </div>
 </x-layouts.app>

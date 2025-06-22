@@ -11,19 +11,12 @@
     </div>
 </div>
 <nav class="w-full sticky top-0 z-[9999]" style="background:#171717; color:#FEFEFE; position:sticky; z-index:9999;">
-    <div class="w-full max-w-[900px] mx-auto flex flex-wrap justify-center py-3 px-4 gap-2 md:gap-4 z-0 relative">
-        <ul class="flex flex-wrap justify-center gap-2 md:gap-4 text-sm font-semibold items-center" style="color:#FEFEFE !important;">
+    <div class="w-full flex justify-center py-3 px-4 gap-2 md:gap-4 z-0 relative">
+        <ul class="flex flex-row gap-2 md:gap-4 text-sm font-semibold items-center w-auto mx-auto" style="color:#FEFEFE !important; flex-wrap:nowrap;">
             <li><a href="<?php echo e(route('dashboard')); ?>" class="nav-link px-3 py-1.5 rounded transition" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Beranda</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'bisnis'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="bisnis" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Bisnis & Tenaga Kerja</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'opini'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="opini" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Opini</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'seni'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="seni" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Seni & Budaya</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'sains'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="sains" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Sains</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'olahraga'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="olahraga" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Olahraga</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'foto'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="foto" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Foto</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'ilustrasi'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="ilustrasi" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Ilustrasi</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'video'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="video" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Video</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'majalah'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="majalah" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Majalah</a></li>
-            <li><a href="<?php echo e(route('dashboard', ['genre' => 'teka-teki'])); ?>" class="nav-link px-3 py-1.5 rounded transition" data-content="teka-teki" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';">Teka-Teki</a></li>
+            <!--[if BLOCK]><![endif]--><?php $__currentLoopData = $categories; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $cat): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <li><a href="<?php echo e(route('dashboard', ['category' => $cat->id])); ?>" class="nav-link px-3 py-1.5 rounded transition" style="color:#FEFEFE !important;" onmouseover="this.style.background='#FEFEFE';this.style.color='#171717';" onmouseout="this.style.background='';this.style.color='#FEFEFE';"><?php echo e($cat->name); ?></a></li>
+            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?><!--[if ENDBLOCK]><![endif]-->
             <li><a href="<?php echo e(route('artikel.create')); ?>" class="px-3 py-1.5 rounded transition flex items-center gap-2" style="background:#7E2320 !important; color:#FEFEFE !important;">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="color:#FEFEFE !important;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536M9 13l6.586-6.586a2 2 0 112.828 2.828L11.828 15.828a2 2 0 01-1.414.586H7v-3a2 2 0 01.586-1.414z" /></svg>
                 Tulis Artikel
@@ -33,7 +26,7 @@
                 Bookmark
             </a></li>
             <li class="ml-2 relative">
-                <button id="profile-toggle" type="button" class="p-2 rounded-full hover:bg-white focus:outline-none focus:ring-2 focus:ring-white transition flex items-center justify-center">
+                <button id="profile-toggle" type="button" class="p-2 rounded-full hover:bg-grey focus:outline-none focus:ring-2 focus:ring-white transition flex items-center justify-center cursor-pointer">
                     <svg class="w-8 h-8 text-[#FEFEFE]" fill="none" stroke="#FEFEFE" stroke-width="2" viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="8" r="4"/>
                         <path d="M6 20c0-2.2 3.6-3.5 6-3.5s6 1.3 6 3.5v1H6v-1z"/>
@@ -55,6 +48,8 @@
         </ul>
     </div>
 </nav>
+<!-- Tambahkan margin bawah setelah navbar agar konten tidak mepet -->
+<div style="margin-bottom: 2.5rem;"></div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('search-input');

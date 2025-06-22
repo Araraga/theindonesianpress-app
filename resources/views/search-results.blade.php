@@ -3,27 +3,27 @@
     <x-header />
     <main class="flex-1 container mx-auto mx-4 md:mx-16 py-10 px-8 md:px-16 min-h-[60vh] flex flex-col justify-between" style="background: linear-gradient(180deg, #EDEDED 100%, #F5F5F5 60%, #EDEDED 100%);">
         <div class="flex-1">
-            <h2 class="text-2xl font-extrabold text-blue-700 mb-6">Hasil Pencarian: <span class="text-gray-800">{{ request('q') }}</span></h2>
+            <h2 class="text-2xl font-extrabold text-red-700 mb-6">Hasil Pencarian: <span class="text-gray-800">{{ request('q') }}</span></h2>
             @if($articles->count())
                 @foreach($articles->chunk(4) as $row)
                 <div class="flex flex-col md:flex-row gap-6 mb-8">
                     @foreach($row as $art)
-                        <a href="{{ route('artikel.show', $art->id) }}" class="flex-1 bg-blue-900 rounded-2xl shadow-xl flex flex-col items-stretch border-4 border-blue-950 overflow-hidden min-w-[220px] max-w-[900px] h-[340px] cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl group">
-                            <div class="w-full h-[180px] flex items-center justify-center bg-blue-950 overflow-hidden">
+                        <a href="{{ route('artikel.show', $art->id) }}" class="flex-1 bg-white-900 rounded-2xl shadow-xl flex flex-col items-stretch border-4 border-grey-950 overflow-hidden min-w-[220px] max-w-[900px] h-[340px] cursor-pointer transition hover:scale-[1.025] hover:shadow-2xl group" style="background-color:rgb(255, 255, 255);">
+                            <div class="w-full h-[180px] flex items-left justify-left bg-blue-950 overflow-hidden">
                                 <img src="{{ asset('storage/' . $art->featured_image) }}" alt="{{ $art->title }}" class="object-cover w-full h-full max-h-[180px] mx-auto transition-transform duration-300 group-hover:scale-105" style="aspect-ratio:21/9; max-width:900px; max-height:180px;" />
                             </div>
-                            <div class="flex-1 flex flex-col items-center p-5">
-                                <h4 class="font-bold text-lg md:text-xl mb-1 line-clamp-2 text-center"
+                            <div class="flex-1 flex flex-col items-left p-5">
+                                <h4 class="font-bold text-lg md:text-xl mb-1 line-clamp-2 text-left"
                                     style="color: #111 !important; display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; text-overflow: ellipsis !important;">
-                                    {{ Str::limit($art->title, 15, '...') }}
+                                    {{ Str::limit($art->title, 25, '...') }}
                                 </h4>
                                 @if(!empty($art->subheadline))
-                                <h5 class="text-gray-600 text-base line-clamp-2 mb-0 text-center"
+                                <h5 class="text-gray-600 text-base line-clamp-2 mb-0 text-left"
                                     style="display: -webkit-box !important; -webkit-line-clamp: 2 !important; -webkit-box-orient: vertical !important; overflow: hidden !important; text-overflow: ellipsis !important;">
                                     {{ Str::limit($art->subheadline, 25, '...') }}
                                 </h5>
                                 @endif
-                                <span class="text-blue-700 text-xs mt-2 text-center">{{ \Carbon\Carbon::parse($art->created_at)->translatedFormat('d M Y') }}</span>
+                                <span class="text-red-700 text-xs mt-2 text-left">{{ \Carbon\Carbon::parse($art->created_at)->translatedFormat('d M Y') }}</span>
                             </div>
                         </a>
                     @endforeach

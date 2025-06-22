@@ -11,10 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('articles', function (Blueprint $table) {
-            $table->dropForeign(['category_id']);
-            $table->dropColumn('category_id');
-        });
+        // Migration ini dinonaktifkan agar kolom category_id tidak dihapus dari tabel articles
     }
 
     /**

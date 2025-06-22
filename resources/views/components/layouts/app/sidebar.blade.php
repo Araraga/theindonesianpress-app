@@ -30,10 +30,11 @@
             </flux:navlist>
 
             <!-- Desktop User Menu -->
+            @php $user = auth()->user(); @endphp
             <flux:dropdown position="bottom" align="start">
                 <flux:profile
-                    :name="auth()->user()->name"
-                    :initials="auth()->user()->initials()"
+                    :name="$user ? $user->name : ''"
+                    :initials="$user && method_exists($user, 'initials') ? $user->initials() : ''"
                     icon-trailing="chevrons-up-down"
                 />
 
@@ -45,13 +46,13 @@
                                     <span
                                         class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
                                     >
-                                        {{ auth()->user()->initials() }}
+                                        {{ $user && method_exists($user, 'initials') ? $user->initials() : '' }}
                                     </span>
                                 </span>
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                                    <span class="truncate font-semibold">{{ $user ? $user->name : 'Guest' }}</span>
+                                    <span class="truncate text-xs">{{ $user ? $user->email : '' }}</span>
                                 </div>
                             </div>
                         </div>
@@ -83,7 +84,7 @@
 
             <flux:dropdown position="top" align="end">
                 <flux:profile
-                    :initials="auth()->user()->initials()"
+                    :initials="$user && method_exists($user, 'initials') ? $user->initials() : ''"
                     icon-trailing="chevron-down"
                 />
 
@@ -95,13 +96,13 @@
                                     <span
                                         class="flex h-full w-full items-center justify-center rounded-lg bg-neutral-200 text-black dark:bg-neutral-700 dark:text-white"
                                     >
-                                        {{ auth()->user()->initials() }}
+                                        {{ $user && method_exists($user, 'initials') ? $user->initials() : '' }}
                                     </span>
                                 </span>
 
                                 <div class="grid flex-1 text-start text-sm leading-tight">
-                                    <span class="truncate font-semibold">{{ auth()->user()->name }}</span>
-                                    <span class="truncate text-xs">{{ auth()->user()->email }}</span>
+                                    <span class="truncate font-semibold">{{ $user ? $user->name : 'Guest' }}</span>
+                                    <span class="truncate text-xs">{{ $user ? $user->email : '' }}</span>
                                 </div>
                             </div>
                         </div>

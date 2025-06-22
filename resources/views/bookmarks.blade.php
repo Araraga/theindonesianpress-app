@@ -23,7 +23,7 @@
                                     <img src="{{ asset('storage/' . $art->featured_image) }}" alt="Gambar Artikel" class="rounded-t-xl h-40 w-full object-cover">
                                 </a>
                                 <div class="p-4 flex-1 flex flex-col">
-                                    <span class="text-xs font-semibold mb-2 underline" style="color:#FFF6BE;">{{ $art->genre }}</span>
+                                    <span class="text-xs font-semibold mb-2 underline" style="color:#FFF6BE;">{{ $art->category->name ?? '-' }}</span>
                                     <h2 class="font-bold text-lg text-gray-900 dark:text-white mb-2 line-clamp-2">
                                         {{ Str::limit($art->title, 16, '...') }}
                                     </h2>
